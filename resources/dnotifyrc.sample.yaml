@@ -1,5 +1,5 @@
 --- 
-- :text: '16:30'
-  :time: 'Time to play badminton'
-- :text: '22:00'
-  :time: 'Call it a day'
+- :text: 'Time to play badminton'
+  :time: '09:35 in the evening'
+- :text: 'Call it a day'
+  :time: 'daily 21:29'

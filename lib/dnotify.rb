@@ -23,13 +23,38 @@ module Dnotify
 
   class Notifier
     require 'yaml'
+    require 'chronic'
 
     def run
       return unless Setup.check
+      #check if a reminder is aligns with the current time
+      reminders.each do |reminder|
+        notify(reminder) if trigger?(reminder)
+      end
     end
 
-    def parse_reminders
-      @reminders = YAML::load_file(Setup::ConfigPath)
+    def notify(reminder)
+      puts reminder[:text]
     end
+
+    def trigger?(reminder)
+      reminder_time = Chronic.parse(reminder[:time], :context => :past)
+      now = Time.now.floor
+      reminder_time == now
+    end
+
+    def reminders
+      @reminders ||= YAML::load_file(Setup::ConfigPath)
+    end
+  end
+end
+
+class Time
+  def round(seconds = 60)
+    Time.at((self.to_f / seconds).round * seconds)
+  end
+
+  def floor(seconds = 60)
+    Time.at((self.to_f / seconds).floor * seconds)
   end
 end
