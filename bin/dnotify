@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require File.join(File.expand_path(File.dirname(__FILE__)), '../lib/dnotify')
+
+puts Dnotify::Notifier.setup
