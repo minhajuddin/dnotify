@@ -7,5 +7,5 @@ if ARGV.count > 0 && ARGV[0] =~ /(setup)/i
   Dnotify::Setup.run
 else
   puts 'running dnotify'
+  Dnotify::Notifier.new.run
 end
-

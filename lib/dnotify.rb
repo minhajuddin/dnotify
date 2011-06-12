@@ -13,14 +13,23 @@ module Dnotify
       puts "copied default template to #{ConfigPath}"
     end
 
-    private
-
     def self.check
-      File.exists?(ConfigPath)
+      config_present = File.exists?(ConfigPath)
+      puts "no config file(#{ Setup::ConfigPath }) exists" unless config_present
+      config_present
     end
 
   end
 
   class Notifier
+    require 'yaml'
+
+    def run
+      return unless Setup.check
+    end
+
+    def parse_reminders
+      @reminders = YAML::load_file(Setup::ConfigPath)
+    end
   end
 end

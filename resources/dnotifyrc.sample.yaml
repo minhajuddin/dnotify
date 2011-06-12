@@ -1,2 +1,5 @@
-time: '16:30'
-text: 'Time to play badminton'
+--- 
+- :text: '16:30'
+  :time: 'Time to play badminton'
+- :text: '22:00'
+  :time: 'Call it a day'
