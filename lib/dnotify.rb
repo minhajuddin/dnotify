@@ -1,21 +1,39 @@
 module Dnotify
   class Setup
     require 'fileutils'
+    require 'tempfile'
 
     ConfigPath = File.expand_path "~/.dnotifyrc"
 
     def self.run
-      if check
-        puts 'dnotify is already setup'
-        return 
-      end
+      setup unless check
+      write_crontab
+    end
+
+    def self.setup
       FileUtils.cp(File.join(File.dirname(__FILE__), '../resources/dnotifyrc.sample.yaml'), ConfigPath)
       puts "copied default template to #{ConfigPath}"
     end
 
+    def self.write_crontab
+      existing_crontab = `crontab -l`
+      return if existing_crontab =~ /dnotify/i
+      #copied from https://github.com/javan/whenever/blob/master/lib/whenever/command_line.rb
+      puts 'setting up cron'
+      tmp_cron_file = Tempfile.new('dnotify_tmp_cron').path
+      File.open(tmp_cron_file, File::WRONLY | File::APPEND) do |file|
+        file << existing_crontab << "* * * * * /bin/bash -l -c 'dnotify' #dnotify\n"
+      end
+      puts `crontab #{tmp_cron_file}`
+    end
+
     def self.check
       config_present = File.exists?(ConfigPath)
-      puts "no config file(#{ Setup::ConfigPath }) exists" unless config_present
+      if config_present
+        puts 'dnotify is setup'
+      else
+        puts "no config file(#{ Setup::ConfigPath }) exists"
+      end
       config_present
     end
 
