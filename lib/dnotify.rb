@@ -1,25 +1,26 @@
 module Dnotify
-  class Notifier
+  class Setup
     require 'fileutils'
 
     ConfigPath = File.expand_path "~/.dnotifyrc"
 
+    def self.run
+      if check
+        puts 'dnotify is already setup'
+        return 
+      end
+      FileUtils.cp(File.join(File.dirname(__FILE__), '../resources/dnotifyrc.sample.yaml'), ConfigPath)
+      puts "copied default template to #{ConfigPath}"
+    end
+
+    private
 
     def self.check
       File.exists?(ConfigPath)
     end
 
-    def self.setup
-      return if check || !confirm_setup
-      FileUtils.cp(File.join(File.dirname(__FILE__), '../resources/dnotifyrc.sample.yaml'), ConfigPath)
-      puts "copied default template to #{ConfigPath}"
-    end
+  end
 
-    def self.confirm_setup
-      puts "You dont' seem to have the dnotify setup, do you want an empty config file(#{ ConfigPath }) to be created?(yes/y/no/n)"
-      answer = !!(gets =~ /(y|yes)/i)
-      puts "Exiting dnotify" if !answer
-      answer
-    end
+  class Notifier
   end
 end
