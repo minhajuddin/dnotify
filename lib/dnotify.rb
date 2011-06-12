@@ -24,17 +24,20 @@ module Dnotify
   class Notifier
     require 'yaml'
     require 'chronic'
+    require 'libnotify'
+
+    DefaultNotification = {:body => "Alarm", :summary => "Alarm", :timeout => 2.5, :icon_path => File.join(File.dirname(__FILE__),'../resources/clock.png') }
 
     def run
       return unless Setup.check
-      #check if a reminder is aligns with the current time
+      #check if a reminder aligns with the current time
       reminders.each do |reminder|
         notify(reminder) if trigger?(reminder)
       end
     end
 
     def notify(reminder)
-      puts reminder[:text]
+      Libnotify.show(DefaultNotification.merge(reminder))
     end
 
     def trigger?(reminder)
