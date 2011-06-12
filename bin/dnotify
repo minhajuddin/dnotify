@@ -2,4 +2,10 @@
 
 require File.join(File.expand_path(File.dirname(__FILE__)), '../lib/dnotify')
 
-Dnotify::Setup.run
+if ARGV.count > 0 && ARGV[0] =~ /(setup)/i
+  puts 'setting up dnotify'
+  Dnotify::Setup.run
+else
+  puts 'running dnotify'
+end
+
