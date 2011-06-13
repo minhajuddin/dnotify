@@ -1,4 +1,6 @@
 --- 
+:display: ':1.0'
+:reminders:
 - :summary: Time to play badminton
   :time: 10:27 in the evening
 - :summary: Call it a day

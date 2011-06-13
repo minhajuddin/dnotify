@@ -46,6 +46,10 @@ module Dnotify
 
     DefaultNotification = {:body => "Alarm", :summary => "Alarm", :timeout => 2.5, :icon_path => File.join(File.dirname(__FILE__),'../resources/clock.png') }
 
+    def initialize
+      ENV['DISPLAY'] = config[:display]
+    end
+
     def run
       return unless Setup.check
       #check if a reminder aligns with the current time
@@ -65,7 +69,11 @@ module Dnotify
     end
 
     def reminders
-      @reminders ||= YAML::load_file(Setup::ConfigPath)
+      config[:reminders]
+    end
+
+    def config
+      @config ||= YAML::load_file(Setup::ConfigPath)
     end
   end
 end

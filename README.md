@@ -18,3 +18,8 @@ Add your reminders to ~/.dnotifyrc
       :time: 10:28 in the evening
 
 Enjoy!
+
+TODO
+====
+- add a few tests
+- allow listing of reminders
