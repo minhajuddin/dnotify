@@ -23,3 +23,5 @@ TODO
 ====
 - add a few tests
 - allow listing of reminders
+- add custom "notifiers", through some ruby dsl?
+- a way to change the frequency of dnotify?
