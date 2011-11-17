@@ -22,7 +22,7 @@ module Dnotify
       puts 'setting up cron'
       tmp_cron_file = Tempfile.new('dnotify_tmp_cron').path
       File.open(tmp_cron_file, File::WRONLY | File::APPEND) do |file|
-        file << existing_crontab << "* * * * * /bin/bash -i -l -c 'dnotify' > /tmp/dnotify.log 2>&1" << '\n'
+        file << existing_crontab << "* * * * * /bin/bash -l -c 'dnotify' > /tmp/dnotify.log 2>&1\n"
       end
       puts `crontab #{tmp_cron_file}`
     end
